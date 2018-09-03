@@ -1,5 +1,5 @@
-require "json"
-require "httparty"
+require 'json'
+require 'httparty'
 
 module StatusPage
   class CLI < Command
@@ -50,35 +50,47 @@ module StatusPage
     begin
       f = File.open("Servers.json","r+")
       stat = JSON.parse(f.read)
+      f.close
+    rescue
+      baseServers = {
+        "Rubygems":"https://pclby00q90vc.statuspage.io/api/v2/status.json",
+        "Github Messages":"https://status.github.com/api/messages.json",
+        "Bitbucket":"https://bqlf8qjztdtr.statuspage.io/api/v2/status.json",
+        "Cloudflare":"https://yh6f0r4529hb.statuspage.io/api/v2/status.json"
+      }
+      File.open("Servers.json", "w+") do |f|
+        f.write(baseServers.to_json)
+      end
+      stat = baseServers
+    end
       hash = {}
 
       stat.each_key { |key|
         response = HTTParty.get(stat[key])
         begin
-          hash[key] = response["status"]["description"] || response["status"]["Production"] || response["status"]["Development"]
+          hash[key] = {
+            "Status":response["status"]["description"] || response["status"]["Production"] || response["status"]["Development"],
+            "Time": Time.now
+          }
         rescue
-          hash[key] = response.first["body"]
+          hash[key] = {
+            "Status":response.first["body"],
+            "Time": Time.now
+          }
         end
       }
 
-      puts "="*50
-      printf "%-20s %s\n", "Service", "Status"
-      puts "="*50
+      puts "="*80
+      printf "%-20s %-32s %s\n", "Service", "Status", "Time"
+      puts "="*80
       hash.each { |key, val|
-            printf "%-20s %s\n", key, val
-            puts "-"*50
+            printf "%-20s %-32s %s\n", key, val[:Status], val[:Time]
+            puts "-"*80
         }
 
         File.open("Status.json","w") do |f|
           f.write(hash.to_json)
         end
-
-      rescue
-        puts "="*50
-        puts "There is no valid server input yet"
-        puts "Please Enter new servers input using addServ"
-        puts "="*50
-      end
   end
 
   desc "Add to JSON", "Write to JSON"
@@ -108,9 +120,9 @@ module StatusPage
       f = File.open("Servers.json","r+")
       fi = JSON.parse(f.read)
       fi.delete(key)
-      puts fi
+      # puts fi
         if fi.empty?
-          File.delete("Servers.json")
+          # File.delete("Servers.json")
           puts "="*50
           puts "There is no Remaining Servers to monitor"
           puts "="*50
