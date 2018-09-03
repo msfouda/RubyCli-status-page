@@ -47,6 +47,10 @@ module StatusPage
   desc "Add to JSON", "Write to JSON"
   long_desc Help.text(:jsonFile)
   def pull
+
+    hashArray = []
+    hash = {}
+
     begin
       f = File.open("Servers.json","r+")
       stat = JSON.parse(f.read)
@@ -63,7 +67,6 @@ module StatusPage
       end
       stat = baseServers
     end
-      hash = {}
 
       stat.each_key { |key|
         response = HTTParty.get(stat[key])
@@ -83,13 +86,21 @@ module StatusPage
       puts "="*80
       printf "%-20s %-32s %s\n", "Service", "Status", "Time"
       puts "="*80
-      hash.each { |key, val|
-            printf "%-20s %-32s %s\n", key, val[:Status], val[:Time]
-            puts "-"*80
-        }
+      display(hash)
 
-        File.open("Status.json","w") do |f|
-          f.write(hash.to_json)
+        begin
+          f = File.open("Status.json", "r")
+            hashArray = JSON.parse(f.read)
+            hashArray << hash
+          f = File.open("Status.json", "w")
+          f.write(hashArray.to_json)
+          f.close
+        rescue
+          File.open("Status.json","w") do |f|
+            hashArray << hash
+            f.write(hashArray.to_json)
+            f.close
+          end
         end
   end
 
@@ -103,6 +114,52 @@ module StatusPage
       puts "\n"*5
       sleep 5
     end
+  end
+
+  desc "HISTORY", " Server log HISTORY"
+  long_desc Help.text(:jsonFile)
+  def history
+    f = File.open("Status.json", "r+")
+      hashArray = JSON.parse(f.read)
+      puts "="*80
+      printf "%-20s %-32s %s\n", "Service", "Status", "Time"
+      puts "="*80
+      hashArray.each { |hash|
+        display(hash)
+      }
+  end
+
+  desc "Backup", " Server log backup"
+  long_desc Help.text(:jsonFile)
+  def backup(path)
+    File.open("#{path}/Backup.json","w") do |f|
+      status = File.open("Status.json", "r")
+      fi = JSON.parse(status.read)
+      status.close
+      f.write(fi.to_json)
+      f.close
+    end
+  end
+
+  desc "Restore", " Server log Restore"
+  long_desc Help.text(:jsonFile)
+  def restore(path)
+    File.open("Status.json","w") do |f|
+      status = File.open("#{path}", "r")
+      fi = JSON.parse(status.read)
+      status.close
+      f.write(fi.to_json)
+      f.close
+    end
+  end
+
+  desc "Display ", " Display HASH"
+  long_desc Help.text(:jsonFile)
+  def display(hash)
+    hash.each { |key, val|
+          printf "%-20s %-32s %s\n", key, val[:Status] || val["Status"], val[:Time] || val["Time"]
+          puts "-"*80
+      }
   end
 
   desc "Add to JSON", "Write to JSON"
@@ -131,7 +188,6 @@ module StatusPage
   def delete(key)
       f = File.open("Servers.json","r+")
       fi = JSON.parse(f.read)
-      fi.delete(key)
       # puts fi
         if fi.empty?
           # File.delete("Servers.json")
@@ -139,6 +195,7 @@ module StatusPage
           puts "There is no Remaining Servers to monitor"
           puts "="*50
         else
+          fi.delete(key)
           f = File.open("Servers.json","w")
           f.write(fi.to_json)
           f.close
