@@ -4,6 +4,7 @@ PATH
     status-page (0.1.0)
       colorize
       httparty
+      json
       thor
 
 GEM
