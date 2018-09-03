@@ -93,6 +93,18 @@ module StatusPage
         end
   end
 
+  desc "LIVE", "LIVE Quary"
+  long_desc Help.text(:jsonFile)
+  def live
+    while true
+      puts "="*80
+      puts "I am LIVE: #{Time.now} "
+      pull
+      puts "\n"*5
+      sleep 5
+    end
+  end
+
   desc "Add to JSON", "Write to JSON"
   long_desc Help.text(:jsonFile)
   def add(key, val)
