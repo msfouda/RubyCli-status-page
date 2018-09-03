@@ -19,33 +19,8 @@ module StatusPage
       puts StatusPage::VERSION
     end
 
-    desc "Write JSON", "Create and Write to JSON"
-    long_desc Help.text(:jsonFile)
-    option :read, desc: "Read from"
-    option :write, desc: "Write input"
-    def sta
-      if options[:write]
-      newArray = []
-      newHashy = {
-        "key_a" => "val_a",
-        "key_b" => "val_b"
-      }
-      newArray << newHashy
-      File.open("temp.json","w") do |f|
-        f.write(newArray.to_json)
-      end
-      puts "done write"
-    elsif options[:read]
-      f = File.open("temp.json","r")
-        readHashy = JSON.parse(f.read)
-      puts readHashy
-      f.close
-      puts "done Read"
-    end
-  end
-
-  desc "Add to JSON", "Write to JSON"
-  long_desc Help.text(:jsonFile)
+  desc "PULL", "Pull Servers Status"
+  long_desc Help.text(:pull)
   def pull
 
     hashArray = []
@@ -104,8 +79,8 @@ module StatusPage
         end
   end
 
-  desc "LIVE", "LIVE Quary"
-  long_desc Help.text(:jsonFile)
+  desc "LIVE", "Get LIVE Servers status"
+  long_desc Help.text(:live)
   def live
     while true
       puts "="*80
@@ -117,7 +92,7 @@ module StatusPage
   end
 
   desc "HISTORY", " Server log HISTORY"
-  long_desc Help.text(:jsonFile)
+  long_desc Help.text(:history)
   def history
     f = File.open("Status.json", "r+")
       hashArray = JSON.parse(f.read)
@@ -130,7 +105,7 @@ module StatusPage
   end
 
   desc "Backup", " Server log backup"
-  long_desc Help.text(:jsonFile)
+  long_desc Help.text(:backup)
   def backup(path)
     File.open("#{path}/Backup.json","w") do |f|
       status = File.open("Status.json", "r")
@@ -142,7 +117,7 @@ module StatusPage
   end
 
   desc "Restore", " Server log Restore"
-  long_desc Help.text(:jsonFile)
+  long_desc Help.text(:restore)
   def restore(path)
     File.open("Status.json","w") do |f|
       status = File.open("#{path}", "r")
@@ -153,8 +128,8 @@ module StatusPage
     end
   end
 
-  desc "Display ", " Display HASH"
-  long_desc Help.text(:jsonFile)
+  desc "Display ", "Display HASH"
+  long_desc Help.text(:display)
   def display(hash)
     hash.each { |key, val|
           printf "%-20s %-32s %s\n", key, val[:Status] || val["Status"], val[:Time] || val["Time"]
@@ -162,8 +137,8 @@ module StatusPage
       }
   end
 
-  desc "Add to JSON", "Write to JSON"
-  long_desc Help.text(:jsonFile)
+  desc "ADD", "Add Server to monitor"
+  long_desc Help.text(:add)
   def add(key, val)
     begin
       f = File.open("Servers.json","r+")
@@ -183,8 +158,8 @@ module StatusPage
     end
   end
 
-  desc "delete fromo JSON", "Write to JSON"
-  long_desc Help.text(:jsonFile)
+  desc "DELETE", "Delete and stop monitor server"
+  long_desc Help.text(:delete)
   def delete(key)
       f = File.open("Servers.json","r+")
       fi = JSON.parse(f.read)
