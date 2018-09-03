@@ -27,7 +27,7 @@ module StatusPage
     hash = {}
 
     begin
-      f = File.open("Servers.json","r+")
+      f = File.open("/db/Servers.json","r+")
       stat = JSON.parse(f.read)
       f.close
     rescue
@@ -37,7 +37,7 @@ module StatusPage
         "Bitbucket":"https://bqlf8qjztdtr.statuspage.io/api/v2/status.json",
         "Cloudflare":"https://yh6f0r4529hb.statuspage.io/api/v2/status.json"
       }
-      File.open("Servers.json", "w+") do |f|
+      File.open("/db/Servers.json", "w+") do |f|
         f.write(baseServers.to_json)
       end
       stat = baseServers
