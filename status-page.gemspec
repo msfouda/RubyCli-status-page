@@ -6,10 +6,10 @@ require "status_page/version"
 Gem::Specification.new do |spec|
   spec.name          = "status-page"
   spec.version       = StatusPage::VERSION
-  spec.authors       = ["Tung Nguyen"]
-  spec.email         = ["tongueroo@gmail.com"]
-  spec.description   = %q{i am description}
-  spec.summary       = %q{i am summary}
+  spec.authors       = ["Mohamed SObhy Fouda"]
+  spec.email         = ["m.fouda@robone.net"]
+  spec.description   = %q{Status-Page Cli help you to monitor servers status }
+  spec.summary       = %q{ For more information check help files and Read me}
   spec.homepage      = ""
   spec.license       = "MIT"
 
