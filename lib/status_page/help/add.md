@@ -1,3 +1,3 @@
 Examples:
 
-$ status-page add Heroku "FILL_IN-Status-API-LINK"
+$ status-page add Heroku <FILL_IN-Status-API-LINK>

@@ -1,3 +1,3 @@
 Examples:
 
-$ status-page restore
+$ status-page restore <Restore Path>
