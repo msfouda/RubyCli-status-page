@@ -84,6 +84,7 @@ module StatusPage
 
   desc "LIVE", "Get LIVE Servers status"
   long_desc Help.text(:live)
+  option :test, desc: "test live method"
   def live
     while true
       puts "="*80
@@ -91,6 +92,7 @@ module StatusPage
       pull
       puts "\n"*5
       sleep 5
+      break if options[:test]
     end
   end
 
