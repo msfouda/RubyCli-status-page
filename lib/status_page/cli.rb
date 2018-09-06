@@ -27,7 +27,7 @@ module StatusPage
     hash = {}
 
     begin
-      f = File.open("/db/Servers.json","r+")
+      f = File.open("status-page-db/Servers.json","r+")
       stat = JSON.parse(f.read)
       f.close
     rescue
@@ -37,7 +37,10 @@ module StatusPage
         "Bitbucket":"https://bqlf8qjztdtr.statuspage.io/api/v2/status.json",
         "Cloudflare":"https://yh6f0r4529hb.statuspage.io/api/v2/status.json"
       }
-      File.open("/db/Servers.json", "w+") do |f|
+
+      Dir.mkdir("status-page-db")
+
+      File.open("status-page-db/Servers.json", "w+") do |f|
         f.write(baseServers.to_json)
       end
       stat = baseServers
@@ -64,14 +67,14 @@ module StatusPage
       display(hash)
 
         begin
-          f = File.open("Status.json", "r")
+          f = File.open("status-page-db/Status.json", "r")
             hashArray = JSON.parse(f.read)
             hashArray << hash
-          f = File.open("Status.json", "w")
+          f = File.open("status-page-db/Status.json", "w")
           f.write(hashArray.to_json)
           f.close
         rescue
-          File.open("Status.json","w") do |f|
+          File.open("status-page-db/Status.json","w") do |f|
             hashArray << hash
             f.write(hashArray.to_json)
             f.close
@@ -94,7 +97,7 @@ module StatusPage
   desc "HISTORY", " Server log HISTORY"
   long_desc Help.text(:history)
   def history
-    f = File.open("Status.json", "r+")
+    f = File.open("status-page-db/Status.json", "r+")
       hashArray = JSON.parse(f.read)
       puts "="*80
       printf "%-20s %-32s %s\n", "Service", "Status", "Time"
@@ -108,7 +111,7 @@ module StatusPage
   long_desc Help.text(:backup)
   def backup(path)
     File.open("#{path}/Backup.json","w") do |f|
-      status = File.open("Status.json", "r")
+      status = File.open("status-page-db/Status.json", "r")
       fi = JSON.parse(status.read)
       status.close
       f.write(fi.to_json)
@@ -119,7 +122,7 @@ module StatusPage
   desc "Restore", " Server log Restore"
   long_desc Help.text(:restore)
   def restore(path)
-    File.open("Status.json","w") do |f|
+    File.open("status-page-db/Status.json","w") do |f|
       status = File.open("#{path}", "r")
       fi = JSON.parse(status.read)
       status.close
@@ -141,15 +144,16 @@ module StatusPage
   long_desc Help.text(:add)
   def add(key, val)
     begin
-      f = File.open("Servers.json","r+")
+      f = File.open("status-page-db/Servers.json","r+")
       fi = JSON.parse(f.read)
       fi[key] = val
       puts fi
-      f = File.open("Servers.json","w")
+      f = File.open("status-page-db/Servers.json","w")
       f.write(fi.to_json)
       f.close
     rescue
-      f = File.open("Servers.json","w")
+      Dir.mkdir("status-page-db")
+      f = File.open("status-page-db/Servers.json","w")
       fi = {}
       fi[key] = val
       puts fi
@@ -161,7 +165,7 @@ module StatusPage
   desc "DELETE", "Delete and stop monitor server"
   long_desc Help.text(:delete)
   def delete(key)
-      f = File.open("Servers.json","r+")
+      f = File.open("status-page-db/Servers.json","r+")
       fi = JSON.parse(f.read)
       # puts fi
         if fi.empty?
@@ -171,7 +175,7 @@ module StatusPage
           puts "="*50
         else
           fi.delete(key)
-          f = File.open("Servers.json","w")
+          f = File.open("status-page-db/Servers.json","w")
           f.write(fi.to_json)
           f.close
       end
