@@ -1,12 +1,38 @@
 # StatusPage
 
-[![Build Status](https://magnum.travis-ci.com/)](https://magnum.travis-ci.com/)
-[![Code Climate](https://codeclimate.com/)](https://codeclimate.com/)
-[![Code Climate](https://codeclimate.com/)](https://codeclimate.com/)
+## Installation Local
 
-TODO: Write a gem description
+to user Locally within it's directory
 
-## Installation
+```sh
+bundle install
+```
+
+to use it from anywhere
+
+```sh
+rake install
+```
+
+## Usage
+
+```sh
+status-page hello yourname
+
+status-page pull
+
+status-page live
+
+status-page backup <Path for history backup>
+
+status-page restore <Path for history restore file>
+
+status-page add <Server name> <Server API>
+
+status-page delete <Server name>
+```
+
+## Installation After Release
 
 Add this line to your application's Gemfile:
 
@@ -24,11 +50,6 @@ Or install it yourself as:
 
 ```sh
 $ gem install status-page
-```
-## Usage
-
-```sh
-status-page hello yourname
 ```
 
 ## Contributing
