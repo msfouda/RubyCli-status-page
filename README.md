@@ -23,6 +23,8 @@ status-page pull
 
 status-page live
 
+status-page history
+
 status-page backup <Path for history backup>
 
 status-page restore <Path for history restore file>
