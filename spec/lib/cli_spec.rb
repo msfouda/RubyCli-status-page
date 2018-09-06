@@ -7,13 +7,13 @@ require "spec_helper"
 #   $ rake clean:vcr ; time rake
 describe StatusPage::CLI do
   before(:all) do
-    @args = "--from Tung"
+    @args = "--from Sobhi"
   end
 
   describe "status-page" do
     it "should hello world" do
       out = execute("exe/status-page hello world #{@args}")
-      expect(out).to include("from: Tung\nHello world")
+      expect(out).to include("from: Sobhi\nHello world")
     end
   end
 end
