@@ -91,8 +91,8 @@ module StatusPage
       puts "I am LIVE: #{Time.now} "
       pull
       puts "\n"*5
-      sleep 5
       break if options[:test]
+      sleep 5
     end
   end
 
