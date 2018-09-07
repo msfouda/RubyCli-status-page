@@ -1,38 +1,85 @@
 # StatusPage
 
+![StatusPage](Screenshots/pull.png)
+
 ## Installation Local
 
 to user Locally within it's directory
 
 ```sh
-bundle install
+  bundle install
 ```
 
-to use it from anywhere
+## Test
 
 ```sh
-rake install
+  rake spec
 ```
+![StatusPage](Screenshots/rake-spec-tests.png)
 
 ## Usage
 
+  Using within local Directory run
+
 ```sh
-status-page hello yourname
-
-status-page pull
-
-status-page live
-
-status-page history
-
-status-page backup <Path for history backup>
-
-status-page restore <Path for history restore file>
-
-status-page add <Server name> <Server API>
-
-status-page delete <Server name>
+  bundle exec exe/status-page hello yourname
+  bundle exec exe/status-page pull
+  bundle exec exe/status-page live
+  bundle exec exe/status-page history
+  bundle exec exe/status-page backup <Directory path for history backup>
+  bundle exec exe/status-page restore <Full Path for history restore file>
+  bundle exec exe/status-page add <Server name> <Server API>
+  bundle exec exe/status-page delete <Server name>
 ```
+
+Usage form anywhere run first
+
+```
+  rake install
+```
+
+```sh
+  status-page hello yourname
+```
+
+```sh
+  status-page pull
+```
+![StatusPage](Screenshots/pull.png)
+
+```sh
+  status-page live
+```
+![StatusPage](Screenshots/live.png)
+
+```sh
+  status-page history
+```
+![StatusPage](Screenshots/history.png)
+
+```sh
+  status-page backup <Directory path for history backup>
+```
+
+```sh
+  status-page restore <Full Path for history restore file>
+```
+
+```sh
+  status-page add <Server name> <Server API>
+```
+
+![StatusPage](Screenshots/add.png)
+
+![StatusPage](Screenshots/add2.png)
+
+```sh
+  status-page delete <Server name>
+```
+
+![StatusPage](Screenshots/delete.png)
+
+![StatusPage](Screenshots/delete2.png)
 
 ## Installation After Release
 
