@@ -79,8 +79,6 @@ Usage form anywhere run first
 
 ![StatusPage](Screenshots/delete.png)
 
-![StatusPage](Screenshots/delete2.png)
-
 ## Installation After Release
 
 Add this line to your application's Gemfile:
