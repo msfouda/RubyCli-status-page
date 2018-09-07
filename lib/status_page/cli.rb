@@ -104,7 +104,7 @@ module StatusPage
         end
       end
 
-      desc "HISTORY", " Server log HISTORY"
+      desc "HISTORY", "Server log HISTORY"
       long_desc Help.text(:history)
       def history
         f = File.open("status-page-db/Status.json", "r+")
@@ -117,7 +117,7 @@ module StatusPage
         }
       end
 
-      desc "Backup", " Server log backup"
+      desc "Backup", "Server log backup"
       long_desc Help.text(:backup)
       def backup(path)
         File.open("#{path}/Backup.json","w") do |f|
@@ -129,7 +129,7 @@ module StatusPage
         end
       end
 
-      desc "Restore", " Server log Restore"
+      desc "Restore", "Server log Restore"
       long_desc Help.text(:restore)
       def restore(path)
         File.open("status-page-db/Status.json","w") do |f|
