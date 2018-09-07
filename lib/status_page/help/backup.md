@@ -1,3 +1,3 @@
 Examples:
 
-$ status-page backup <backup path>
+$ status-page backup <backup directory path>
