@@ -1,6 +1,6 @@
 # StatusPage
 
-![StatusPage](Screenshots/pull.png)
+![StatusPage](Screenshots/help.png)
 
 ## Installation Local
 
